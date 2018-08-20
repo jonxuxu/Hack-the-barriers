@@ -81,6 +81,8 @@
          dataType: "jsonp",
          success: function(data){
             //console.log(data)
+            points = [];
+
             for(var i = 0; i < data.features.length; i++) {
               var time = data.features[i].attributes.ATSCENE_TS;
               var latitude = data.features[i].geometry.y;
@@ -99,7 +101,7 @@
               markers.push(new google.maps.Marker({
                 position: {lat: latitude, lng: longitude},
                 map: map,
-                title: "lol"
+                title: "0",
               }));
             });
             markers.forEach(function(e) {
