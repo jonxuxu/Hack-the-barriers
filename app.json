@@ -1,0 +1,7 @@
+{
+  "name": "safewatch",
+  "description": "Keeping Canadian newcomers safe",
+  "repository": "https://github.com/JonathanXu1/Hack-the-barriers",
+  "keywords": ["node", "express", "heroku"],
+  "image": "heroku/nodejs"
+}
