@@ -55,6 +55,7 @@
           var longitude = data.features[i].geometry.x
 
           points.push( {latitude: latitude, longitude: longitude} );
+          render();
         }
      },
      error: function(jqXHR, textStatus, errorThrown) {
@@ -116,6 +117,8 @@
           e.setMap(map);
         });
       }
+
+      setInterval(render, 60000);
     </script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4RlYes-LFZXhM7OJMryGDnVUf3MbrXUM&callback=initMap">
