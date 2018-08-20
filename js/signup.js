@@ -33,26 +33,23 @@ function newUser(username, userphone, useraddress){
   // Write the new post's data simultaneously in the posts list and the user's post list.
   var updates = {};
   updates['/users/' + newPostKey] = postData;
-  console.log('wahtef');
+
   return firebase.database().ref().update(updates);
 
 }
 
 $('#signup').click(function(event){
-  console.log("clicked ree")
   var $form = $(this);
-  console.log("submit to Firebase");
 
   //make the submit disabled
   $form.find("#submit").prop('disabled', true);
 
   //get the actual values that we will send to firebase
   var name = $('#name').val();
-  console.log(name);
   var phone = $('#phone').val();
-  console.log(phone);
   var address = $('#address').val();
-  console.log(address);
 
   newUser(name, phone, address);
+
+  alert("You have subscribed to text notifications!");
 })
