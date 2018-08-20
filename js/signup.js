@@ -1,8 +1,6 @@
 
 (function ($) {
     "use strict";
-
-
     /*==================================================================
     [ Focus Contact2 ]*/
     $('.input2').each(function(){
@@ -15,59 +13,46 @@
             }
         })
     })
-
-
-
-    /*==================================================================
-    [ Validate ]*/
-    var name = $('.validate-input input[name="name"]');
-    var email = $('.validate-input input[name="email"]');
-    var message = $('.validate-input textarea[name="message"]');
-
-
-    $('.validate-form').on('submit',function(){
-        var check = true;
-
-        if($(name).val().trim() == ''){
-            showValidate(name);
-            check=false;
-        }
-
-
-        if($(email).val().trim().match(/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{1,5}|[0-9]{1,3})(\]?)$/) == null) {
-            showValidate(email);
-            check=false;
-        }
-
-        if($(message).val().trim() == ''){
-            showValidate(message);
-            check=false;
-        }
-
-        return check;
-    });
-
-
-    $('.validate-form .input2').each(function(){
-        $(this).focus(function(){
-           hideValidate(this);
-       });
-    });
-
-    function showValidate(input) {
-        var thisAlert = $(input).parent();
-
-        $(thisAlert).addClass('alert-validate');
-    }
-
-    function hideValidate(input) {
-        var thisAlert = $(input).parent();
-
-        $(thisAlert).removeClass('alert-validate');
-    }
-
 })(jQuery);
 
 function googleTranslateElementInit() {
   new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
 }
+
+function newUser(username, userphone, useraddress){
+  // A post entry.
+  var postData = {
+    name: username,
+    phone: userphone,
+    address: useraddress,
+  };
+
+  // Get a key for a new Post.
+  var newPostKey = firebase.database().ref().child('posts').push().key;
+
+  // Write the new post's data simultaneously in the posts list and the user's post list.
+  var updates = {};
+  updates['/users/' + newPostKey] = postData;
+  console.log('wahtef');
+  return firebase.database().ref().update(updates);
+
+}
+
+$('#signup').click(function(event){
+  console.log("clicked ree")
+  var $form = $(this);
+  console.log("submit to Firebase");
+
+  //make the submit disabled
+  $form.find("#submit").prop('disabled', true);
+
+  //get the actual values that we will send to firebase
+  var name = $('#name').val();
+  console.log(name);
+  var phone = $('#phone').val();
+  console.log(phone);
+  var address = $('#address').val();
+  console.log(address);
+
+  newUser(name, phone, address);
+})

@@ -26,26 +26,26 @@
 	<div class="bg-contact2" style="background-image: url('images/bg-01.jpg');">
 		<div class="container-contact2">
 			<div class="wrap-contact2">
-				<form class="contact2-form validate-form">
+				<form class="contact2-form validate-form" id="signup">
 					<span class="contact2-form-title">
 						Sign Up
 					</span>
 
           <p> NAME </p>
 					<div class="wrap-input2 validate-input" data-validate="Name is required">
-						<input class="input2" type="text" name="name">
+						<input class="input2" type="text" name="name" id="name">
 						<span class="focus-input2"></span>
 					</div>
 
           <p> PHONE NUMBER </p>
 					<div class="wrap-input2 validate-input" data-validate = "Valid phone number is required">
-						<input class="input2" type="tel" name="phone number">
+						<input class="input2" type="tel" name="phone number" id="phone">
 						<span class="focus-input2"></span>
 					</div>
 
           <p>ADDRESS </p>
 					<div class="wrap-input2 validate-input" data-validate = "Address is required">
-						<input class="input2" type="text" name="address">
+						<input class="input2" type="text" name="address" id="address">
 						<span class="focus-input2"></span>
 					</div>
 
@@ -54,7 +54,7 @@
 					<div class="container-contact2-form-btn">
 						<div class="wrap-contact2-form-btn">
 							<div class="contact2-form-bgbtn"></div>
-							<button class="contact2-form-btn">
+							<button id="submit">
 								Send Your Message
 							</button>
 						</div>
@@ -88,15 +88,5 @@
 <!--===============================================================================================-->
   <script type="text/javascript" src="http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 	<script src="js/signup.js"></script>
-	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
-	<script>
-	  window.dataLayer = window.dataLayer || [];
-	  function gtag(){dataLayer.push(arguments);}
-	  gtag('js', new Date());
-
-	  gtag('config', 'UA-23581568-13');
-	</script>
-
 </body>
 </html>
