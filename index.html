@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Barrier boi</title>
+    <title>SafeWatch</title>
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
   </head>
   <style>
@@ -23,11 +23,8 @@
   <body>
     <nav>
     <div class="nav-wrapper">
-        <a href="#" class="brand-logo">SERV</a>
+        <a href="#" class="brand-logo">SafeWatch</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><a href="./map.html">Map</a></li>
-        <li><a href="./cards.html">Cases</a></li>
-        <li><a href="./addCase.html">Add A Case</a></li>
         <li><a href="./signUp.html">Notifications</a></li>
         </ul>
     </div>
@@ -40,32 +37,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <script>
-
-    var points = [];
-
-    $.ajax({
-     type: 'GET',
-     url:'https://c4s.torontopolice.on.ca/arcgis/rest/services/CADPublic/C4S/MapServer/0/query?f=json&where=1%3D1&outSR=4326',
-     dataType: "jsonp",
-     success: function(data){
-        //console.log(data)
-        for(var i = 0; i < data.features.length; i++) {
-          var time = data.features[i].attributes.ATSCENE_TS;
-          var latitude = data.features[i].geometry.y;
-          var longitude = data.features[i].geometry.x
-
-          points.push( {latitude: latitude, longitude: longitude} );
-          render();
-        }
-     },
-     error: function(jqXHR, textStatus, errorThrown) {
-        console.log("Error");
-     }
-    });
-    </script>
-
-    <script>
       var map, infoWindow, markers;
+      var points = [];
+
       function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: 43, lng: -79},
@@ -100,24 +74,46 @@
         infoWindow.open(map);
       }
       function render() {
-        markers.forEach(function(e) {
-          e.setMap(null);
+
+        $.ajax({
+         type: 'GET',
+         url:'https://c4s.torontopolice.on.ca/arcgis/rest/services/CADPublic/C4S/MapServer/0/query?f=json&where=1%3D1&outSR=4326',
+         dataType: "jsonp",
+         success: function(data){
+            //console.log(data)
+            for(var i = 0; i < data.features.length; i++) {
+              var time = data.features[i].attributes.ATSCENE_TS;
+              var latitude = data.features[i].geometry.y;
+              var longitude = data.features[i].geometry.x
+
+              points.push( {latitude: latitude, longitude: longitude} );
+            }
+
+            markers.forEach(function(e) {
+              e.setMap(null);
+            });
+            markers = [];
+            points.forEach(function(point) {
+              var latitude = point.latitude;
+              var longitude = point.longitude;
+              markers.push(new google.maps.Marker({
+                position: {lat: latitude, lng: longitude},
+                map: map,
+                title: "lol"
+              }));
+            });
+            markers.forEach(function(e) {
+              e.setMap(map);
+            });
+         },
+         error: function(jqXHR, textStatus, errorThrown) {
+            console.log("Error");
+         }
         });
-        markers = [];
-        points.forEach(function(point) {
-          var latitude = point.latitude;
-          var longitude = point.longitude;
-          markers.push(new google.maps.Marker({
-            position: {lat: latitude, lng: longitude},
-            map: map,
-            title: "lol"
-          }));
-        });
-        markers.forEach(function(e) {
-          e.setMap(map);
-        });
+
       }
 
+      render();
       setInterval(render, 60000);
     </script>
     <script async defer
